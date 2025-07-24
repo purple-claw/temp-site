@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITIS IPA Prep Dashboard - Modern Edition</title>
+  <style>
+    /* CSS Variables for Theme */
+    :root {
+      --primary: #667eea;
+      --primary-dark: #5a67d8;
+      --secondary: #764ba2;
+      --accent: #f093fb;
+      --success: #48bb78;
+      --warning: #ed8936;
+      --danger: #f56565;
+      --dark: #2d3748;
+      --light: #f7fafc;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-600: #4b5563;
+      --gray-800: #1f2937;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: var(--gray-800);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 0;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    nav .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      list-style: none;
+    }
+
+    nav a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      color: var(--gray-600);
+      text-decoration: none;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    nav a:hover {
+      background: var(--gradient-primary);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      color: var(--gray-600);
+      font-size: 1.125rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Topic Cards */
+    .topic {
+      background: white;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid var(--gray-100);
+    }
+
+    .topic:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .topic-header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .topic-header:hover {
+      background: var(--gradient-accent);
+    }
+
+    .topic-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .topic-icon {
+      width: 2rem;
+      height: 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .toggle-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(180deg);
+    }
+
+    .content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.3s ease;
+      background: var(--gray-50);
+    }
+
+    .content.open {
+      max-height: 4000px;
+      padding: 2rem;
+    }
+
+    .content p {
+      font-size: 1.125rem;
+      color: var(--gray-600);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .content h3 {
+      color: var(--primary-dark);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 2rem 0 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .content h3::before {
+      content: "▶";
+      color: var(--accent);
+      font-size: 0.875rem;
+    }
+
+    /* Lists */
+    .subtopic-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      list-style: none;
+    }
+
+    .subtopic-list li {
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .subtopic-list li:hover {
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .resource-list {
+      display: grid;
+      gap: 0.75rem;
+      list-style: none;
+    }
+
+    .resource-list li {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .resource-list li:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .resource-list a {
+      display: block;
+      padding: 1rem 1.25rem;
+      color: var(--gray-700);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .resource-list a::before {
+      content: "🔗";
+      margin-right: 0.5rem;
+    }
+
+    .resource-list a:hover {
+      background: var(--gradient-success);
+      color: white;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--gray-200);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      nav ul {
+        gap: 0.25rem;
+      }
+      
+      nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+      
+      .topic-header {
+        padding: 1rem;
+      }
+      
+      .topic-header h2 {
+        font-size: 1.25rem;
+      }
+      
+      .subtopic-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .topic {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .topic:nth-child(2) { animation-delay: 0.1s; }
+    .topic:nth-child(3) { animation-delay: 0.2s; }
+    .topic:nth-child(4) { animation-delay: 0.3s; }
+    .topic:nth-child(5) { animation-delay: 0.4s; }
+    .topic:nth-child(6) { animation-delay: 0.5s; }
+    .topic:nth-child(7) { animation-delay: 0.6s; }
+    .topic:nth-child(8) { animation-delay: 0.7s; }
+    .topic:nth-child(9) { animation-delay: 0.8s; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <ul>
+        <li><a href="#kyt">Know Your TCS</a></li>
+        <li><a href="#biz">BizSkills</a></li>
+        <li><a href="#ui">User Interface</a></li>
+        <li><a href="#unix">Unix</a></li>
+        <li><a href="#fundamental">Fundamentals</a></li>
+        <li><a href="#scenario">Scenario-Based</a></li>
+        <li><a href="#generic">Generic Topics</a></li>
+        <li><a href="#advanced">Advanced ITIS</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="header">
+      <h1>ITIS IPA Prep Dashboard</h1>
+      <h2>Created by Dev for Manvitha..</h2>
+      <p>Master every topic with comprehensive resources, interactive learning, and modern study tools</p>
+    </div>
+
+    <div class="progress-container">
+      <h3>Study Progress</h3>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressBar"></div>
+      </div>
+      <p id="progressText">0% Complete</p>
+    </div>
+
+    <!-- KYT -->
+    <section id="kyt" class="topic">
+      <div class="topic-header">
+        <h2><span class="topic-icon">🏢</span>Know Your TCS</h2>
+        <button class="toggle-btn">▼</button>
+      </div>
+      <div class="content">
+        <p>Deep dive into TCS's organizational structure, history, strategic initiatives, and corporate culture to understand the company's DNA and values.</p>
+        
+        <h3>Core Subtopics</h3>
+        <ul class="subtopic-list">
+          <li>Company Timeline & Historical Milestones</li>
+          <li>Global Delivery Model & Operations</li>
+          <li>Strategic Acquisitions & Joint Ventures</li>
+          <li>Machine-First™ Delivery Methodology</li>
+          <li>CSR Initiatives & Sustainability Goals</li>
+          <li>Leadership Structure & Board Members</li>
+          <li>Financial Performance & Market Position</li>
+          <li>Innovation Labs & Research Centers</li>
+        </ul>
+        
+        <h3>Essential Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://www.tcs.com/about-us" target="_blank">TCS Official About Us Page</a></li>
+          <li><a href="https://www.tcs.com/investor-relations/annual-reports" target="_blank">Annual Reports & Financial Data</a></li>
+          <li><a href="https://www.statista.com/statistics/267488/tcs-revenue/" target="_blank">Revenue Statistics - Statista</a></li>
+          <li><a href="https://www.tcs.com/content/dam/global-tcs/en/pdfs/about/tcs-company-factsheet.pdf" target="_blank">Company Factsheet (PDF)</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- BizSkills -->
+    <section id="biz" class="topic">
+      <div class="topic-header">
+        <h2><span class="topic-icon">💼</span>BizSkills</h2>
+        <button class="toggle-btn">▼</button>
+      </div>
+      <div class="content">
+        <p>Master essential business frameworks, professional ethics, stakeholder management, and communication strategies for effective client engagement.</p>
+        
+        <h3>Core Subtopics</h3>
+        <ul class="subtopic-list">
+          <li>Professional Ethics & Code of Conduct</li>
+          <li>Stakeholder Analysis & RACI Matrix</li>
+          <li>Business Process Modeling (BPMN 2.0)</li>
+          <li>Client Engagement & Relationship Management</li>
+          <li>Escalation Management & Conflict Resolution</li>
+          <li>Business Case Development & ROI Analysis</li>
+          <li>Project Management Fundamentals</li>
+          <li>Communication Strategies & Presentation Skills</li>
+        </ul>
+        
+        <h3>Essential Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://www.tcs.com/content/dam/tcs/pdf/discover-tcs/corporate-governance/conduct-ethics-policy.pdf" target="_blank">TCS Code of Conduct (PDF)</a></li>
+          <li><a href="https://www.bpmn.org/" target="_blank">BPMN 2.0 Official Specification</a></li>
+          <li><a href="https://hbr.org/2021/03/how-to-improve-your-stakeholder-analysis" target="_blank">Harvard Business Review: Stakeholder Analysis</a></li>
+          <li><a href="https://www.pmi.org/learning/library/stakeholder-management-task-project-success-7736" target="_blank">PMI: Stakeholder Management Guide</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- User Interface -->
+    <section id="ui" class="topic">
+      <div class="topic-header">
+        <h2><span class="topic-icon">🎨</span>User Interface</h2>
+        <button class="toggle-btn">▼</button>
+      </div>
+      <div class="content">
+        <p>Comprehensive frontend development covering HTML5, CSS3, JavaScript, responsive design, and modern web performance optimization techniques.</p>
+        
+        <h3>Core Subtopics</h3>
+        <ul class="subtopic-list">
+          <li>HTML5 Semantic Elements & Structure</li>
+          <li>CSS3 Box Model, Flexbox & Grid Systems</li>
+          <li>JavaScript ES6+ Features & Event Loop</li>
+          <li>DOM Manipulation & Virtual DOM Concepts</li>
+          <li>Responsive Design & Mobile-First Approach</li>
+          <li>Web Performance: Critical Rendering Path</li>
+          <li>Accessibility (WCAG) & SEO Best Practices</li>
+          <li>Modern Frameworks Overview (React, Vue, Angular)</li>
+        </ul>
+        
+        <h3>Essential Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">MDN HTML5 Complete Reference</a></li>
+          <li><a href="https://css-tricks.com/snippets/css/complete-guide-grid/" target="_blank">CSS-Tricks: Complete Guide to Grid</a></li>
+          <li><a href="https://javascript.info/" target="_blank">Modern JavaScript Tutorial</a></li>
+          <li><a href="https://web.dev/learn/" target="_blank">Google Web.dev Learning Resources</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Unix -->
+    <section id="unix" class="topic">
+      <div class="topic-header">
+        <h2><span class="topic-icon">⚡</span>Unix</h2>
+        <button class="toggle-btn">▼</button>
+      </div>
+      <div class="content">
+        <p>Master Unix/Linux systems from shell basics to advanced scripting, process management, and system administration fundamentals.</p>
+        
+        <h3>Core Subtopics</h3>
+        <ul class="subtopic-list">
+          <li>Kernel Architecture & System Calls</li>
+          <li>Shell Types & Command Line Mastery</li>
+          <li>Process Management & Job Control</li>
+          <li>File Systems & Permissions (ACLs)</li>
+          <li>Text Processing: grep, sed, awk</li>
+          <li>Shell Scripting & Automation</li>
+          <li>Network Tools & System Monitoring</li>
+          <li>Package Management & System Services</li>
+        </ul>
+        
+        <h3>Essential Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://www.gnu.org/software/bash/manual/" target="_blank">GNU Bash Reference Manual</a></li>
+          <li><a href="https://linuxcommand.org/" target="_blank">The Linux Command Line Tutorial</a></li>
+          <li><a href="https://tldp.org/guides.html" target="_blank">Linux Documentation Project Guides</a></li>
+          <li><a href="https://www.shellscript.sh/" target="_blank">Shell Scripting Tutorial</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Fundamentals -->
+    <section id="fundamental" class="topic">
+      <div class="topic-header">
+        <h2><span class="topic-icon">🔧</span>ITIS Fundamentals</h2>
+        <button class="toggle-btn">▼</button>
+      </div>
+      <div class="content">
+        <p>Core computer science foundations: operating systems, networking protocols, database systems, algorithms, and data structures with practical applications.</p>
+        
+        <h3>Core Subtopics</h3>
+        <ul class="subtopic-list">
+          <li>OSI Model & TCP/IP Protocol Suite</li>
+          <li>Memory Management: Virtual Memory & Paging</li>
+          <li>Database Systems: ACID Properties & Transactions</li>
+          <li>Relational Algebra & Query Optimization</li>
+          <li>Data Structures: Trees, Graphs, Hash Tables</li>
+          <li>Algorithm Complexity & Big-O Analysis</li>
+          <li>Concurrency & Parallel Processing</li>
+          <li>Distributed Systems Fundamentals</li>
+        </ul>
+        
+        <h3>Essential Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://www.geeksforgeeks.org/computer-network-tutorials/" target="_blank">GeeksforGeeks: Computer Networks</a></li>
+          <li><a href="https://www.postgresql.org/docs/current/" target="_blank">PostgreSQL Official Documentation</a></li>
+          <li><a href="https://visualgo.net/en" target="_blank">Algorithm Visualizations - VisuAlgo</a></li>
+          <li><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/" target="_blank">Operating Systems: Three Easy Pieces</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Scenario-Based -->
+    <section id="scenario" class="topic">
+      <div class="topic-header">
+        <h2><span class="topic-icon">🎯</span>Scenario-Based Questions</h2>
+        <button class="toggle-btn">▼</button>
+      </div>
+      <div class="content">
+        <p>Real-world IT problem-solving: risk assessment, incident response, system design, and strategic decision-making frameworks.</p>
+        
+        <h3>Core Subtopics</h3>
+        <ul class="subtopic-list">
+          <li>Root Cause Analysis (5 Whys, Fishbone)</li>
+          <li>Risk Assessment & SWOT Analysis</li>
+          <li>Incident Response Lifecycle (NIST Framework)</li>
+          <li>Business Continuity & Disaster Recovery</li>
+          <li>System Architecture Decision Trees</li>
+          <li>Multi-Cloud Strategy & Vendor Management</li>
+          <li>Security Incident SLA Design</li>
+          <li>Performance Troubleshooting Methodologies</li>
+        </ul>
+        
+        <h3>Essential Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://aws.amazon.com/architecture/well-architected/" target="_blank">AWS Well-Architected Framework</a></li>
+          <li><a href="https://www.nist.gov/cyberframework" target="_blank">NIST Cybersecurity Framework</a></li>
+          <li><a href="https://www.isaca.org/resources/white-papers" target="_blank">ISACA White Papers Collection</a></li>
+          <li><a href="https://www.sans.org/white-papers/" target="_blank">SANS Institute White Papers</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Generic Topics -->
+    <section id="generic" class="topic">
+      <div class="topic-header">
+        <h2><span class="topic-icon">🌐</span>ITIS Generic Topics</h2>
+        <button class="toggle-btn">▼</button>
+      </div>
+      <div class="content">
+        <p>Emerging technologies, enterprise integration patterns, security standards, and distributed systems architecture for modern IT landscapes.</p>
+        
+        <h3>Core Subtopics</h3>
+        <ul class="subtopic-list">
+          <li>IoT Ecosystems: MQTT, CoAP, LoRaWAN</li>
+          <li>Edge Computing vs. Cloud Processing</li>
+          <li>Microservices vs. Monolithic Architecture</li>
+          <li>API Gateway & Service Mesh Patterns</li>
+          <li>DevOps & CI/CD Pipeline Design</li>
+          <li>Blockchain & Distributed Ledger Tech</li>
+          <li>AI/ML Integration in Enterprise Systems</li>
+          <li>Zero Trust Security Architecture</li>
+        </ul>
+        
+        <h3>Essential Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://mqtt.org/mqtt-specification/" target="_blank">MQTT Protocol Specification</a></li>
+          <li><a href="https://microservices.io/patterns/" target="_blank">Microservices Pattern Collection</a></li>
+          <li><a href="https://www.iso.org/standard/27001" target="_blank">ISO/IEC 27001:2022 Standard</a></li>
+          <li><a href="https://www.nist.gov/publications/zero-trust-architecture" target="_blank">NIST Zero Trust Architecture</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Advanced ITIS -->
+    <section id="advanced" class="topic">
+      <div class="topic-header">
+        <h2><span class="topic-icon">🚀</span>Advanced ITIS</h2>
+        <button class="toggle-btn">▼</button>
+      </div>
+      <div class="content">
+        <p>Graduate-level concepts: enterprise architecture, advanced analytics, AI strategy, and emerging technology integration for strategic IT leadership.</p>
+        
+        <h3>Core Subtopics</h3>
+        <ul class="subtopic-list">
+          <li>Enterprise Architecture Frameworks (TOGAF, Zachman)</li>
+          <li>IT Governance & Strategic Planning</li>
+          <li>Advanced Analytics & Data Science Pipeline</li>
+          <li>AI Ethics & Responsible AI Development</li>
+          <li>Digital Transformation Strategies</li>
+          <li>Innovation Management & Technology Adoption</li>
+          <li>Quantum Computing Implications</li>
+          <li>Sustainability in IT Operations</li>
+        </ul>
+        
+        <h3>Essential Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://www.opengroup.org/togaf" target="_blank">TOGAF Enterprise Architecture</a></li>
+          <li><a href="https://www.mckinsey.com/capabilities/mckinsey-digital" target="_blank">McKinsey Digital Insights</a></li>
+          <li><a href="https://www.gartner.com/en/information-technology" target="_blank">Gartner IT Research</a></li>
+          <li><a href="https://sloanreview.mit.edu/topic/technology/" target="_blank">MIT Sloan Management Review</a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Enhanced JavaScript with modern features
+    class StudyTracker {
+      constructor() {
+        this.completedTopics = new Set();
+        this.totalTopics = document.querySelectorAll('.topic').length;
+        this.init();
+      }
+
+      init() {
+        this.setupTopicToggles();
+        this.loadProgress();
+        this.updateProgressBar();
+      }
+
+      setupTopicToggles() {
+        document.querySelectorAll('.topic-header').forEach((header, index) => {
+          header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const btn = header.querySelector('.toggle-btn');
+            const isOpen = content.classList.contains('open');
+            
+            // Toggle content
+            content.classList.toggle('open');
+            btn.textContent = isOpen ? '▼' : '▲';
+            btn.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+            
+            // Mark as visited/completed
+            if (!isOpen) {
+              this.markTopicCompleted(index);
+            }
+            
+            // Smooth scroll to topic
+            if (!isOpen) {
+              setTimeout(() => {
+                header.scrollIntoView({ 
+                  behavior: 'smooth', 
+                  block: 'start' 
+                });
+              }, 300);
+            }
+          });
+        });
+      }
+
+      markTopicCompleted(topicIndex) {
+        this.completedTopics.add(topicIndex);
+        this.saveProgress();
+        this.updateProgressBar();
+        
+        // Add completion animation
+        const topic = document.querySelectorAll('.topic')[topicIndex];
+        topic.style.borderLeft = '5px solid var(--success)';
+      }
+
+      updateProgressBar() {
+        const progress = (this.completedTopics.size / this.totalTopics) * 100;
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        
+        progressBar.style.width = `${progress}%`;
+        progressText.textContent = `${Math.round(progress)}% Complete`;
+        
+        if (progress === 100) {
+          progressText.textContent = '🎉 All Topics Completed!';
+          progressBar.style.background = 'var(--gradient-success)';
+        }
+      }
+
+      saveProgress() {
+        localStorage.setItem('itisProgress', JSON.stringify([...this.completedTopics]));
+      }
+
+      loadProgress() {
+        const saved = localStorage.getItem('itisProgress');
+        if (saved) {
+          this.completedTopics = new Set(JSON.parse(saved));
+          
+          // Mark completed topics visually
+          this.completedTopics.forEach(index => {
+            const topic = document.querySelectorAll('.topic')[index];
+            topic.style.borderLeft = '5px solid var(--success)';
+          });
+        }
+      }
+    }
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Initialize the study tracker
+    document.addEventListener('DOMContentLoaded', () => {
+      new StudyTracker();
+      
+      // Add typing animation to header
+      const headerText = document.querySelector('.header h1');
+      const text = headerText.textContent;
+      headerText.textContent = '';
+      
+      let i = 0;
+      const typeWriter = () => {
+        if (i < text.length) {
+          headerText.textContent += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 100);
+        }
+      };
+      
+      setTimeout(typeWriter, 500);
+    });
+
+    // Add intersection observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all topics
+    document.querySelectorAll('.topic').forEach(topic => {
+      topic.style.opacity = '0';
+      topic.style.transform = 'translateY(30px)';
+      topic.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(topic);
+    });
+  </script>
+</body>
+</html>
