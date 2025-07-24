@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=.0"/>
+  <title>ITIS IPA Exam Prep Dashboard</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fa; color: #333; }
+    h1, h2, h3 { margin-bottom: .5em; color: #2c3e50; }
+    a { color: #0077cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 2em auto; padding: 1em; }
+    .topic { background: #fff; border-radius: 8px; padding: 1.5em; margin-bottom: 1.5em; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .topic-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+    .topic-header h2 { font-size: 1.3em; }
+    .toggle-btn { font-size: 1.2em; transition: transform .3s ease; }
+    .content { max-height: 0; overflow: hidden; transition: max-height .5s ease; }
+    .content.open { max-height: 2000px; }
+    ul { margin-top: .5em; list-style: disc inside; }
+    .resource-list li { margin-bottom: .5em; }
+    .resource-list a { display: inline-block; }
+    /* Sticky nav */
+    nav { position: sticky; top: 0; background: #fff; padding: 1em; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 100; }
+    nav ul { display: flex; gap: 1em; justify-content: center; }
+    nav ul li { list-style: none; }
+    nav ul li a { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#kyt">Know Your TCS</a></li>
+      <li><a href="#biz">BizSkills</a></li>
+      <li><a href="#unix">Unix</a></li>
+      <li><a href="#ui">User Interface</a></li>
+      <li><a href="#fundamental">Fundamentals</a></li>
+      <li><a href="#scenario">Scenario-Based</a></li>
+      <li><a href="#generic">Generic Topics</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>ITIS IPA Exam Prep Dashboard</h1>
+    
+    <!-- KYT -->
+    <section id="kyt" class="topic">
+      <div class="topic-header">
+        <h2>Know Your TCS (KYT)</h2>
+        <span class="toggle-btn">&#9654;</span>
+      </div>
+      <div class="content">
+        <p>Deep dive into TCS: history, milestones, Tata Group structure, global footprint, revenue trends.</p>
+        <h3>Key Subtopics</h3>
+        <ul>
+          <li>TCS Founding & Evolution</li>
+          <li>Major Acquisitions & Partnerships</li>
+          <li>Global Delivery Model</li>
+          <li>CSR Initiatives & Awards</li>
+        </ul>
+        <h3>Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://www.tcs.com/about-us" target="_blank">TCS Official “About Us”</a></li>
+          <li><a href="https://www.statista.com/statistics/267488/tcs-revenue/" target="_blank">TCS Revenue Statistics – Statista</a></li>
+          <li><a href="https://www.tcs.com/content/dam/tcs/pdf/discover-tcs/investor-relations/annual-reports/2024/TCS-Annual-Report-2023-24.pdf" target="_blank">TCS Annual Report 2023–24 (PDF)</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- BizSkills -->
+    <section id="biz" class="topic">
+      <div class="topic-header">
+        <h2>BizSkills</h2>
+        <span class="toggle-btn">&#9654;</span>
+      </div>
+      <div class="content">
+        <p>Core business frameworks, ethics, stakeholder analysis, BPMN basics, client communication practices.</p>
+        <h3>Key Subtopics</h3>
+        <ul>
+          <li>Professional Ethics & Code of Conduct</li>
+          <li>Stakeholder Mapping & RACI</li>
+          <li>Business Process Modeling (BPMN)</li>
+          <li>Client Escalation & Communication</li>
+        </ul>
+        <h3>Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://www.bpmn.org/" target="_blank">BPMN Official Specification</a></li>
+          <li><a href="https://hbr.org/2021/03/the-5-ways-to-make-your-stakeholder-analysis-more-effective" target="_blank">Stakeholder Analysis – HBR</a></li>
+          <li><a href="https://www.tcs.com/content/dam/tcs/pdf/discover-tcs/corporate-governance/conduct-ethics-policy.pdf" target="_blank">TCS Code of Conduct (PDF)</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Unix -->
+    <section id="unix" class="topic">
+      <div class="topic-header">
+        <h2>Unix</h2>
+        <span class="toggle-btn">&#9654;</span>
+      </div>
+      <div class="content">
+        <p>Operating system internals, shell commands, scripting, process management, file systems.</p>
+        <h3>Key Subtopics</h3>
+        <ul>
+          <li>Kernel vs. Shell Architecture</li>
+          <li>Process States & Signals</li>
+          <li>Pipes, Redirection, & Filters</li>
+          <li>Shell Scripting Patterns</li>
+        </ul>
+        <h3>Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://www.gnu.org/software/bash/manual/bash.html" target="_blank">GNU Bash Manual</a></li>
+          <li><a href="https://linuxcommand.org/" target="_blank">LinuxCommand.org Tutorial</a></li>
+          <li><a href="https://www.oreilly.com/library/view/unix-and-shell/0596008953/" target="_blank">“Unix and the Shell” – O’Reilly</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- User Interface -->
+    <section id="ui" class="topic">
+      <div class="topic-header">
+        <h2>User Interface (UI)</h2>
+        <span class="toggle-btn">&#9654;</span>
+      </div>
+      <div class="content">
+        <p>Frontend fundamentals: HTML5, CSS3, JavaScript event loop, responsive design, performance optimization.</p>
+        <h3>Key Subtopics</h3>
+        <ul>
+          <li>HTML5 Semantic Elements</li>
+          <li>CSS Box Model & Flex/Grid Layouts</li>
+          <li>Document Object Model & Event Loop</li>
+          <li>Reflow vs. Repaint Optimization</li>
+        </ul>
+        <h3>Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">MDN HTML5 Reference</a></li>
+          <li><a href="https://css-tricks.com/snippets/css/complete-guide-grid/" target="_blank">CSS Grid Guide – CSS-Tricks</a></li>
+          <li><a href="https://flaviocopes.com/javascript-event-loop/" target="_blank">JS Event Loop Explained</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Fundamentals -->
+    <section id="fundamental" class="topic">
+      <div class="topic-header">
+        <h2>ITIS Fundamentals</h2>
+        <span class="toggle-btn">&#9654;</span>
+      </div>
+      <div class="content">
+        <p>Core computer science theory: OS, networking, databases, algorithms, data structures.</p>
+        <h3>Key Subtopics</h3>
+        <ul>
+          <li>TCP/IP Stack & Congestion Control</li>
+          <li>Paging, Segmentation, & Memory Management</li>
+          <li>Relational Algebra & Normalization</li>
+          <li>Join Algorithms & Query Optimization</li>
+        </ul>
+        <h3>Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://www.geeksforgeeks.org/computer-network-tutorials/" target="_blank">Networking – GeeksforGeeks</a></li>
+          <li><a href="https://www.postgresql.org/docs/current/index.html" target="_blank">PostgreSQL Official Docs</a></li>
+          <li><a href="https://visualgo.net/en" target="_blank">Data Structures & Algorithms – Visualgo</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Scenario-Based -->
+    <section id="scenario" class="topic">
+      <div class="topic-header">
+        <h2>Scenario-Based Questions</h2>
+        <span class="toggle-btn">&#9654;</span>
+      </div>
+      <div class="content">
+        <p>Analyze real-world IT scenarios: risk assessment, root-cause, multi-layered mitigation strategies.</p>
+        <h3>Key Subtopics</h3>
+        <ul>
+          <li>Root-Cause Analysis & 5 Whys</li>
+          <li>SWOT & Risk Matrix</li>
+          <li>Incident Response Planning</li>
+          <li>Disaster Recovery & High Availability</li>
+        </ul>
+        <h3>Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://www.isaca.org/bookstore/bookstore-wht_papers/business-continuity-and-disaster-recovery" target="_blank">ISACA Disaster Recovery Guide</a></li>
+          <li><a href="https://www.projectmanagement.com/wikis/232929/Root-Cause-Analysis" target="_blank">Root-Cause Analysis – PM Wiki</a></li>
+          <li><a href="https://aws.amazon.com/architecture/well-architected/" target="_blank">AWS Well-Architected Framework</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Generic Topics -->
+    <section id="generic" class="topic">
+      <div class="topic-header">
+        <h2>ITIS Generic Topics</h2>
+        <span class="toggle-btn">&#9654;"></span>
+      </div>
+      <div class="content">
+        <p>Wide-ranging IT knowledge: IoT protocols, enterprise integration, security standards, compliance.</p>
+        <h3>Key Subtopics</h3>
+        <ul>
+          <li>IoT: MQTT vs. HTTP, Edge vs. Cloud</li>
+          <li>ESB vs. Microservices Integration</li>
+          <li>ISO 27001 Controls & Risk Scoring</li>
+          <li>CAP Theorem & Distributed Systems</li>
+        </ul>
+        <h3>Resources</h3>
+        <ul class="resource-list">
+          <li><a href="https://mqtt.org/" target="_blank">MQTT.org</a></li>
+          <li><a href="https://microservices.io/patterns/" target="_blank">Microservices Patterns</a></li>
+          <li><a href="https://www.iso.org/standard/27001.html" target="_blank">ISO/IEC 27001 Standard</a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Accordion Toggle Logic
+    document.querySelectorAll('.topic-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        const btn = header.querySelector('.toggle-btn');
+        content.classList.toggle('open');
+        btn.innerHTML = content.classList.contains('open') ? '▼' : '►';
+      });
+    });
+  </script>
+</body>
+</html>
